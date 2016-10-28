@@ -1,0 +1,27 @@
+
+<% if @post.errors.any? %>
+  <ul>
+    <% @post.errors.full_messages.each do |err| %>
+      <li>
+        <%= err %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<div class="container">
+    <%= simple_form_for @post do |f| %>
+      <div class="row">
+        <%= f.input :title, placeholder: "Title", label: false %>
+      </div>
+      <div class="row">
+        <%= f.input :url, placeholder: "Link address", label: false %>
+      </div>
+      <div class="row">
+        <%= f.association :user, label_method: "#{:username}", placeholder: "Choose your name", label: false %>
+      </div>
+      <div class="row">
+        <%= f.button :submit, class: "button btn-xs btn-primary" %>
+      </div>
+    <% end %>
+</div>

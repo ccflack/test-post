@@ -1,0 +1,35 @@
+
+<table class="table table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>
+        Vote!
+      </th>
+      <th>
+        Link
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td class="vert-align">
+          <%= link_to upvote_post_path(post), class: "btn btn-xs btn-block" do %>
+            <i class="glyphicon glyphicon-chevron-up"></i>
+          <% end %>
+          <p class="text-center nopadding">
+          <%= post.vote_count %>
+          <p/>
+          <%= link_to downvote_post_path(post), class: "btn btn-xs btn-block" do %>
+            <i class="glyphicon glyphicon-chevron-down"></i>
+          <% end %>
+        </td>
+        <td class="vert-align">
+          <h3><%= link_to(post.title, visit_post_path(post)) %></h3>
+          <h5>Submitted by: <%= link_to "#{post.user.username}", user_path(post) %></h5>
+          <h6 class="text-right"><%= post.created_at.strftime('%b %e, %Y') %></h6>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

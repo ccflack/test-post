@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TestPost</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1 class='text-center'>Test post, please ignore.</h1>
+      <h5 class= 'text-center'>Page, like, 98,472,364 of the Internet. Probably.</h5>
+    </div>
+    <div class="container.fluid">
+      <div class="col-xs-10">
+        <%= yield %>
+      </div>
+      <div class="col-xs-2">
+        <h3><%= button_to "Submit Post", new_post_path, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
+        <h3><%= button_to "Create Account", new_user_path, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
+      </div>
+    </div>
+  </body>
+</html>

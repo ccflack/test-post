@@ -1,0 +1,11 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.nopadding {
+  padding: 0;
+  margin: 0;
+}
+
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}
