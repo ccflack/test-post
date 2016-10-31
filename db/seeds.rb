@@ -16,13 +16,26 @@
 
 end
 
+@categories = Array.new
+
+
+5.times do
+
+@categories << Category.create(
+  title: Faker::GameOfThrones.city
+)
+
+end
+
+
 10.times do
 
 post = Post.create(
   title: Faker::Hacker.say_something_smart,
   url: Faker::Internet.url,
   vote_count: rand(1..100),
-  user: @users.sample
+  user: @users.sample,
+  category: @categories.sample
 )
 
 end

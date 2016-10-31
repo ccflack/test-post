@@ -28,6 +28,7 @@
           <h3><%= link_to(post.title, visit_post_path(post)) %></h3>
           <h5>Submitted by: <%= link_to "#{post.user.username}", user_path(post) %></h5>
           <h6 class="text-right"><%= post.created_at.strftime('%b %e, %Y') %></h6>
+          <h5 class='text-center'>Posted in: <%= post.category.title %></h3>
         </td>
       </tr>
     <% end %>
