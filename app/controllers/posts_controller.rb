@@ -16,7 +16,10 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to root_path
     else
-      render :new
+      @existing = Post.find_by(url: @post.url)
+      @existing.vote_count += 1
+      @existing.save
+      redirect_to root_path
     end
   end
 
