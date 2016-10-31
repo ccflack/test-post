@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(item_params)
+    @post = Post.new(post_params)
     if @post.save
       redirect_to root_path
     else
@@ -21,6 +21,7 @@ class PostsController < ApplicationController
   end
 
   def upvote
+    @post.vote_count = 0 unless @post.vote_count
     @post.vote_count += 1
     @post.save
     redirect_to root_path
@@ -38,10 +39,6 @@ class PostsController < ApplicationController
     redirect_to @post.url
   end
 
-  def show
-
-  end
-
   private
 
   def locate_post
@@ -49,7 +46,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :url)
+    params.require(:post).permit(:title, :url, :vote_count, :user_id)
   end
 
 end

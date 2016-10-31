@@ -6,6 +6,11 @@
   margin: 0;
 }
 
-.table tbody>tr>td.vert-align{
+.table tbody>tr>td.vert-align {
     vertical-align: middle;
+}
+
+.input input {
+  width: 100%;
+  display: block;
 }
