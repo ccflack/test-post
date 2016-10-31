@@ -20,7 +20,10 @@
       <%= f.input :url, placeholder: "Link address", label: false %>
     </div>
     <div class="input">
-      <%= f.association :user, label_method: "#{:username}", placeholder: "Choose your name", label: false %>
+      <%= f.association :category, placeholder: "Choose a category" %>
+    </div>
+    <div class="input">
+      <%= f.association :user, label_method: "#{:username}", placeholder: "Choose your name" %>
     </div>
     <div>
       <%= f.button :submit, class: "button btn-xs btn-primary" %>
