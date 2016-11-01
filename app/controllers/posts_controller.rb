@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
 
-  before_action :locate_post, only: [:upvote, :downvote, :visit]
+  before_action :locate_post, only: [:upvote, :visit]
+  before_action :locate_vote, only: :downvote
+  before_action :require_login, only: [:upvote, :downvote, :create, :new]
 
 
   def index
@@ -12,33 +14,32 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
     if @post.save
-      redirect_to root_path
+      flash[:success] = "Thanks!"
+      redirect_to :root
     else
-      @existing = Post.find_by(url: @post.url)
-      @existing.vote_count += 1
-      @existing.save
-      redirect_to root_path
+      render :new
     end
   end
 
   def upvote
-    @post.vote_count = 0 unless @post.vote_count
-    @post.vote_count += 1
-    @post.save
-    redirect_to root_path
+    @post.votes.new(post_id: @post.id, user_id: current_user.id)
+    if @post.save
+      redirect_to :root
+    end
   end
 
   def downvote
-    @post.vote_count -= 1
-    @post.save
-    redirect_to root_path
+    @vote.destroy
+    redirect_to :root
   end
 
   def visit
-    @post.vote_count += 1
-    @post.save
+    if current_user
+      @post.votes.new(post_id: @post.id, user_id: current_user.id)
+      @post.save
+    end
     redirect_to @post.url
   end
 
@@ -48,8 +49,13 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  def locate_vote
+    @post = Post.find(params[:id])
+    @vote = Vote.find_by post_id: @post.id
+  end
+
   def post_params
-    params.require(:post).permit(:title, :url, :vote_count, :user_id, :category_id)
+    params.require(:post).permit(:title, :url, :user_id, :category_id)
   end
 
 end

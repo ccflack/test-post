@@ -14,19 +14,23 @@
     <% @posts.each do |post| %>
       <tr>
         <td class="vert-align">
-          <%= link_to upvote_post_path(post), class: "btn btn-xs btn-block" do %>
-            <i class="glyphicon glyphicon-chevron-up"></i>
+          <% if current_user %>
+            <%= link_to upvote_post_path(post.id), class: "btn btn-xs btn-block", method: :post do %>
+              <i class="glyphicon glyphicon-chevron-up"></i>
+            <% end %>
           <% end %>
           <p class="text-center nopadding">
-          <%= post.vote_count %>
+          <%= post.votes.count %>
           <p/>
-          <%= link_to downvote_post_path(post), class: "btn btn-xs btn-block" do %>
-            <i class="glyphicon glyphicon-chevron-down"></i>
+          <% if current_user %>
+            <%= link_to downvote_post_path(current_user.id, post.id), class: "btn btn-xs btn-block", method: :delete do %>
+              <i class="glyphicon glyphicon-chevron-down"></i>
+            <% end %>
           <% end %>
         </td>
         <td class="vert-align">
-          <h3><%= link_to(post.title, visit_post_path(post)) %></h3>
-          <h5>Submitted by: <%= link_to "#{post.user.username}", user_path(post) %></h5>
+          <h3><%= link_to post.title, post.url %></h3>
+          <h5>Submitted by: <%= link_to post.user.username, user_path(post) %></h5>
           <h6 class="text-right"><%= post.created_at.strftime('%b %e, %Y') %></h6>
           <h5 class='text-center'>Posted in: <%= post.category.title %></h3>
         </td>
