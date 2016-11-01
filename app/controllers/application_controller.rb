@@ -18,13 +18,17 @@ class ApplicationController < ActionController::Base
   end
 
   def require_login
-    flash[:warning] = "You must be logged in to do that!" if logged_out?
-    redirect_to login_path if logged_out?
+    if logged_out?
+      flash[:warning] = "You must be logged in to do that!" 
+      redirect_to login_path
+    end
   end
 
   def forbid_login
-    flash[:warning] = "You're already logged in!" if logged_in?
-    redirect_to root_path if logged_in?
+    if logged_in?
+      flash[:warning] = "You're already logged in!"
+      redirect_to root_path
+    end
   end
 
 end
