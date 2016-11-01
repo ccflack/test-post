@@ -6,10 +6,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    duplicate_check
     if @user.save
-      redirect_to new_post_path
+      redirect_to :new_post
     else
+      flash[:warning] = "Correct highlighted fields."
       render :new
     end
   end
@@ -17,17 +17,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username)
+    params.require(:user).permit(:username, :email_address, :password)
   end
-
-  def duplicate_check
-    @users = User.all
-    @users.each do |user|
-      if @user.username == user.username
-        @user.errors.add(:username, :duplicate, message: "This user already exists.")
-      end
-    end
-  end
-
 
 end

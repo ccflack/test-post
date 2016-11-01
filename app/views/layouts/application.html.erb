@@ -12,13 +12,27 @@
       <h1 class='text-center'>Test post, please ignore.</h1>
       <h5 class= 'text-center'>Page, like, 98,472,364 of the Internet. Probably.</h5>
     </div>
+    <% if flash.any? %>
+      <% flash.each do |key, message| %>
+      <div class="alert alert-<%= key %>" role="alert">
+        <p>
+          <%= message %>
+        </p>
+      </div>
+      <% end %>
+    <% end %>
     <div class="container.fluid">
       <div class="col-xs-10">
         <%= yield %>
       </div>
       <div class="col-xs-2">
-        <h3><%= button_to "Submit Post", new_post_path, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
-        <h3><%= button_to "Create Account", new_user_path, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
+        <% if current_user %>
+        <h3><%= button_to "Submit Post", :new_post, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
+        <h3><%= button_to "Log Out", session_path(id: "any"), class: "btn btn-block btn-primary btn-xs", method: :delete %></h3>
+        <% else %>
+        <h3><%= button_to "Create Account", :new_user, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
+        <h3><%= button_to "Log In", :new_session, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
+        <% end %>
       </div>
     </div>
   </body>
