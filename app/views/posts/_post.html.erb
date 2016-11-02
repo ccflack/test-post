@@ -1,0 +1,44 @@
+    <tr>
+      <td class="vert-align">
+        <% if current_user || !current_page?(new_post_comment_path(post)) %>
+          <%= link_to up_vote_path(post.id), class: "btn btn-xs btn-block", method: :post do %>
+            <i class="glyphicon glyphicon-chevron-up"></i>
+          <% end %>
+        <% end %>
+        <p class="text-center nopadding">
+        <%= post.votes_count %>
+        <p/>
+        <% if current_user %>
+          <%= link_to down_vote_path(post.id, current_user.id), class: "btn btn-xs btn-block", method: :delete do %>
+            <i class="glyphicon glyphicon-chevron-down"></i>
+          <% end %>
+        <% end %>
+      </td>
+      <td class="vert-align">
+        <h3><%= link_to post.title, post.url %></h3>
+        <h5>Submitted by: <%= link_to post.user.username, user_path(post) %></h5>
+        <h5>Tagged as:
+          <% if post.tags.any? %>
+            <% post.tags.each do |tag| %>
+              <%= link_to tag.name, tag, class: "btn btn-xs btn-inline btn-info nopadding" %>
+            <% end %>
+          <% end %>
+        </h5>
+      <h5 class="text-center">Posted in: <%= post.category.title %></h3>
+        <td class="vert-align">
+        <%= link_to 'Leave a comment', new_post_comment_path(post), class: "btn btn-xs btn-inline btn-primary nopadding" %>
+        <h6><%= post.created_at.strftime('%b %e, %Y') %></h6>
+        </div>
+      </td>
+      </td>
+    </tr>
+    <% if current_page?(post_comment_path) do %>
+    <tr>
+      <td>
+        <% @comments.each do |comment| %>
+          <%= comment.body %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+    <% end %>

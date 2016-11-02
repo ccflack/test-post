@@ -15,18 +15,15 @@
   email_address: Faker::Internet.email,
   password: "admin"
 )
-
 end
 
 @categories = []
-
 
 5.times do
 
 @categories << Category.create!(
   title: Faker::GameOfThrones.city
 )
-
 end
 
 @posts = []
@@ -39,7 +36,15 @@ end
   user: @users.sample,
   category: @categories.sample
 )
+end
 
+@tags = []
+
+30.times do
+
+@tags << Tag.create!(
+  name: Faker::Hacker.noun
+)
 end
 
 250.times do
@@ -47,5 +52,13 @@ end
   Vote.create!(
     post: @posts.sample,
     user: @users.sample
+  )
+end
+
+100.times do
+
+  Tagging.create!(
+    post: @posts.sample,
+    tag: @tags.sample
   )
 end

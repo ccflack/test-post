@@ -15,11 +15,11 @@ class SessionsController < ApplicationController
         redirect_to :root
         flash[:success] = "Welcome #{user.username}"
       else
-        flash[:warning] = "Your password is incorrect."
+        flash.now[:warning] = "Your password is incorrect."
         render :new
       end
     else
-      flash[:warning] = "No account found with that name. Would you like to <a href='/signup/'>create an account</a>?".html_safe
+      flash.now[:warning] = "No account found with that name. Would you like to <a href='/signup/'>create an account</a>?".html_safe
       render :new
     end
   end

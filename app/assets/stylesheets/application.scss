@@ -1,6 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+* {
+  box-sizing: border-box;
+}
+
 .nopadding {
   padding: 0;
   margin: 0;

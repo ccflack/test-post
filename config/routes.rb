@@ -1,17 +1,19 @@
 Rails.application.routes.draw do
 
   root 'posts#index'
-
+  resources :posts do
+    resources :comments
+  end
   resources :categories
   resources :users
-  resources :posts do
+  resources :tags
+  resources :sessions, only: [:new, :create, :destroy]
+  resources :votes do
     member do
-      post 'upvote'
-      delete 'downvote'
+      post 'up'
+      delete 'down'
     end
   end
-  resources :votes
-  resources :sessions, only: [:new, :create, :destroy]
 
   get '/login' => redirect('/sessions/new')
   get '/signup' => redirect('/users/new')

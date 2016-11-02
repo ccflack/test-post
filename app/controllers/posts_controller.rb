@@ -1,8 +1,7 @@
 class PostsController < ApplicationController
 
-  before_action :locate_post, only: [:upvote, :visit]
-  before_action :locate_vote, only: :downvote
-  before_action :require_login, only: [:upvote, :downvote, :create, :new]
+  before_action :locate_post, only: :visit
+  before_action :require_login, only: [:create, :new]
 
 
   def index
@@ -16,23 +15,16 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.new(post_params)
     if @post.save
+      tag_names = params[:post][:tag_names].split(",")
+      tag_names = tag_names.collect(&:strip)
+      tag_names.each do |name|
+        @post.tags << Tag.find_or_initialize_by(name: name)
+      end
       flash[:success] = "Thanks!"
       redirect_to :root
     else
       render :new
     end
-  end
-
-  def upvote
-    @post.votes.new(post_id: @post.id, user_id: current_user.id)
-    if @post.save
-      redirect_to :root
-    end
-  end
-
-  def downvote
-    @vote.destroy
-    redirect_to :root
   end
 
   def visit
@@ -55,7 +47,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :url, :user_id, :category_id)
+    params.require(:post).permit(:title, :url, :user_id, :category_id, :tag)
   end
 
 end
