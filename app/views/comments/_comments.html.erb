@@ -1,0 +1,9 @@
+<tr>
+  <td>
+    <% if comments.any? %>
+      <% comments.each do |comment| %>
+        <%= comment.body %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

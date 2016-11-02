@@ -16,16 +16,15 @@ class CommentsController < ApplicationController
     @comment.post_id = params[:post_id]
     if @comment.save
       flash[:success] = "Thanks!"
-      redirect_to post_comment_path(@post, @comment)
+      redirect_to post_comment_path(@comment.post_id)
     else
       render :new
     end
   end
 
   def show
-    @comment = Comment.find(params[:id])
     @comments = []
-    @comments << Comment.where(post: @post)
+    @comments << Comment.find_by(post_id: @post.id)
   end
 
   private

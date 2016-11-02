@@ -11,6 +11,50 @@
 <div class="col-xs-2">
   <h3><%= button_to "Home", root_path, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
 </div>
+<table class="table table-striped">
+  <tbody>
+    <tr>
+      <td class="vert-align">
+        <% if current_user || !current_page?(new_post_comment_path(@post)) %>
+          <%= link_to up_vote_path(@post.id), class: "btn btn-xs btn-block", method: :post do %>
+            <i class="glyphicon glyphicon-chevron-up"></i>
+          <% end %>
+        <% end %>
+        <p class="text-center nopadding">
+          <%= @post.votes_count %>
+        <p/>
+          <% if current_user %>
+            <%= link_to down_vote_path(@post.id, current_user.id), class: "btn btn-xs btn-block", method: :delete do %>
+              <i class="glyphicon glyphicon-chevron-down"></i>
+            <% end %>
+          <% end %>
+      </td>
+      <td class="vert-align">
+        <h3><%= link_to @post.title, @post.url %></h3>
+          <h5>Submitted by: <%= link_to @post.user.username, user_path(@post) %></h5>
+            <h5>Tagged as:
+              <% if @post.tags.any? %>
+                <% @post.tags.each do |tag| %>
+                  <%= link_to tag.name, tag, class: "btn btn-xs btn-inline btn-info nopadding" %>
+                <% end %>
+              <% end %>
+            </h5>
+        <h5 class="text-center">Posted in: <%= @post.category.title %></h3>
+      </td>
+      <% if @post.comments.any? %>
+        <% @post.comments.each do |comment| %>
+          <tr>
+            <td class="vert-align">
+              <%= comment.user.username %>
+            </td>
+            <td class="vert-align">
+              <%= comment.body %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+  </tbody>
+</table>
 <div class="col-xs-5 col-xs-offset-2">
   <%= simple_form_for [@post, @comment] do |f| %>
     <div class="input">

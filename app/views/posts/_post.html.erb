@@ -25,10 +25,9 @@
           <% end %>
         </h5>
       <h5 class="text-center">Posted in: <%= post.category.title %></h3>
-        <td class="vert-align">
+      </td>
+      <td class="vert-align">
         <%= link_to 'Leave a comment', new_post_comment_path(post), class: "btn btn-xs btn-inline btn-primary nopadding" %>
         <h6><%= post.created_at.strftime('%b %e, %Y') %></h6>
-        </div>
-      </td>
       </td>
     </tr>
