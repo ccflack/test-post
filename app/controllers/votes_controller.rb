@@ -11,13 +11,13 @@ before_action :locate_vote, only: :down
   def up
     @post.votes.new(post_id: @post.id, user_id: current_user.id)
     if @post.save
-      redirect_to :root
+      redirect_back(fallback_location: :root)
     end
   end
 
   def down
     @vote.destroy
-    redirect_to :root
+    redirect_back(fallback_location: :root)
   end
 
 private
