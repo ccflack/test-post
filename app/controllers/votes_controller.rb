@@ -28,7 +28,7 @@ private
 
   def locate_vote
     @post = Post.find(params[:id])
-    @vote = Vote.find_by post_id: @post.id
+    @vote = Vote.find_by post_id: @post.id, user_id: current_user.id
   end
 
   def vote_params

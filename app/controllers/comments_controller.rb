@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-  before_action :locate_post, only: [:show, :new, :create]
+  before_action :locate_post, only: [:index, :show, :new, :create]
   before_action :require_login, only: [:create, :new]
 
   def index
@@ -16,7 +16,7 @@ class CommentsController < ApplicationController
     @comment.post_id = params[:post_id]
     if @comment.save
       flash[:success] = "Thanks!"
-      redirect_to post_comment_path(@comment.post_id)
+      redirect_to post_comments_path(@comment.post_id)
     else
       render :new
     end
