@@ -8,9 +8,6 @@
   </ul>
 <% end %>
 
-<div class="col-xs-2">
-  <h3><%= button_to "Home", root_path, class: "btn btn-block btn-primary btn-xs", method: :get %></h3>
-</div>
 <table class="table table-striped">
   <tbody>
     <tr>
@@ -42,16 +39,7 @@
         <h5 class="text-center">Posted in: <%= @post.category.title %></h3>
       </td>
       <% if @post.comments.any? %>
-        <% @post.comments.each do |comment| %>
-          <tr>
-            <td class="vert-align">
-              <%= comment.user.username %>
-            </td>
-            <td class="vert-align">
-              <%= comment.body %>
-            </td>
-          </tr>
-        <% end %>
+        <%= render @post.comments %>
       <% end %>
   </tbody>
 </table>
