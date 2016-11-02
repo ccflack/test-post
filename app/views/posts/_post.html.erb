@@ -32,13 +32,3 @@
       </td>
       </td>
     </tr>
-    <% if current_page?(post_comment_path) do %>
-    <tr>
-      <td>
-        <% @comments.each do |comment| %>
-          <%= comment.body %>
-        <% end %>
-      </td>
-    </tr>
-    <% end %>
-    <% end %>
